@@ -6,12 +6,10 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
-    private int size = 0;
+public class ArrayStorage extends AbstractArrayStorage{
 
     public void clear() {
-        Arrays.fill(storage, 0, size - 1, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -29,8 +27,8 @@ public class ArrayStorage {
         if (index == -1) {
             storage[size] = r;
             size++;
-        } else if (size >= storage.length) {
-            System.out.println("Storage is full!");
+        } else if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow");
         } else {
             System.out.println("Resume " + r + " already exist!");
         }
