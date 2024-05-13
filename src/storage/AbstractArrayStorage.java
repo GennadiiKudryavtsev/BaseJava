@@ -31,14 +31,19 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         System.out.println(index);
-        if (index < 0) {
+        if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow");
+        }
+        else if (isExisting(index)) {
+            System.out.println("Resume " + r + " already exist!");
+        }  else {
             insertElement(r, index);
             size++;
-        } else if (size >= STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
-        } else {
-            System.out.println("Resume " + r + " already exist!");
         }
+    }
+
+    private boolean isExisting(int index) {
+        return index >= 0;
     }
 
     public void delete(String uuid) {
