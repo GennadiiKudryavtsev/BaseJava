@@ -15,9 +15,10 @@ public abstract class  AbstractArrayStorageTest {
     protected final String UUID_1 = "uuid1Test";
     protected final String UUID_2 = "uuid2Test";
     protected final String UUID_3 = "uuid3Test";
-    protected final Resume resume1 = new Resume(UUID_1);
-    protected final Resume resume2 = new Resume(UUID_2);
-    protected final Resume resume3 = new Resume(UUID_3);
+    protected final Resume RESUME1 = new Resume(UUID_1);
+    protected final Resume RESUME2 = new Resume(UUID_2);
+    protected final Resume RESUME3 = new Resume(UUID_3);
+    protected final Resume resume4 = new Resume("uuid4Test");
 
     protected final Storage storage;
     protected final int size = 3;
@@ -29,25 +30,24 @@ public abstract class  AbstractArrayStorageTest {
     @BeforeEach
     public void setUp() {
         storage.clear();
-        storage.save(resume1);
-        storage.save(resume2);
-        storage.save(resume3);
+        storage.save(RESUME1);
+        storage.save(RESUME2);
+        storage.save(RESUME3);
     }
 
     @Test
     void size() {
-        assertEquals(size, storage.size());
+        assertSize(size);
     }
 
     @Test
     void clear() {
         storage.clear();
-        assertEquals(0, storage.size());
+        assertSize(0);
     }
 
     @Test
     void save() {
-        Resume resume4 = new Resume("uuid4");
         storage.save(resume4);
         assertGet(resume4);
         assertSize(size + 1);
@@ -76,31 +76,29 @@ public abstract class  AbstractArrayStorageTest {
 
     @Test
     void updateIfNotExist() {
-        Resume resume4 = new Resume("uuid4Test");
         Assertions.assertThrows(NotExistStorageException.class, () -> storage.update(resume4));
     }
 
     @Test
     void updateIfExist() {
-        Resume resume4 = new Resume("uuid1Test");
-        assertThrows(ExistStorageException.class, () -> storage.update(resume4));
+        Resume newResume = new Resume("uuid1Test");
+        assertThrows(ExistStorageException.class, () -> storage.update(newResume));
     }
 
     @Test
     void delete() {
-        storage.delete(resume1.getUuid());
-        assertGetNull(resume1);
+        storage.delete(RESUME1.getUuid());
+        assertGetNull(RESUME1);
         assertSize(size - 1);
     }
 
     @Test
     void get() {
-        assertGet(resume1);
+        assertGet(RESUME1);
     }
 
     @Test
     void getNotExist() {
-        Resume resume4 = new Resume("uuid4Test");
         assertGetNull(resume4);
     }
 
