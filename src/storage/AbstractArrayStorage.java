@@ -62,21 +62,15 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        try {
-            if (index < 0) {
-                throw new NotExistStorageException(uuid);
-            } else {
-                return storage[index];
-            }
-        } catch (NotExistStorageException e){
-            e.getMessage();
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        } else {
+            return storage[index];
         }
-       return null;
     }
 
     public Resume[] getAll() {
-        Resume[] result = Arrays.copyOf(storage, size);
-        return result;
+        return Arrays.copyOf(storage, size);
     }
 
     protected abstract void fillDeletedElement(int index);
