@@ -40,10 +40,7 @@ public class MapStorage extends AbstractStorage{
 
     @Override
     protected Object getSearchKey(String uuid) {
-        if (isExisting(uuid)) {
-            return uuid;
-        }
-        return -1;
+        return uuid;
     }
 
     @Override

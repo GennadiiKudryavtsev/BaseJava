@@ -15,40 +15,40 @@ public abstract class AbstractStorage implements Storage{
     }
 
     public final void update(Resume r) {
-        Object search = getSearchKey(r.getUuid());
-        getNotExistingSearchKey(search, r.getUuid());
-        doUpdate(r, search);
+        Object searchKey = getNotExistingSearchKey(r.getUuid());
+        doUpdate(r, searchKey);
         throw new ExistStorageException(r.getUuid());
     }
 
     public final void save(Resume r) {
-        Object search = getSearchKey(r.getUuid());
-        getExistingSearchKey(search, r.getUuid());
-        doSave(r, search);
+        Object searchKey = getExistingSearchKey(r.getUuid());
+        doSave(r, searchKey);
     }
 
     public final void delete(String uuid) {
-        Object search = getSearchKey(uuid);
-        getNotExistingSearchKey(search, uuid);
-        doDelete(search);
+        Object searchKey = getNotExistingSearchKey(uuid);
+        doDelete(searchKey);
     }
 //
     public final Resume get(String uuid) {
-        Object search = getSearchKey(uuid);
-        getNotExistingSearchKey(search, uuid);
-        return doGet(search);
+        Object searchKey = getNotExistingSearchKey(uuid);
+        return doGet(searchKey);
     }
 
-    private void getExistingSearchKey(Object search, String uuid) {
-        if (isExisting(search)) {
+    private Object getExistingSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExisting(searchKey)) {
             throw new ExistStorageException((uuid));
         }
+        return searchKey;
     }
 
-    private void getNotExistingSearchKey(Object search, String uuid) {
-        if (!isExisting(search)) {
+    private Object getNotExistingSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (!isExisting(searchKey)) {
             throw new NotExistStorageException((uuid));
         }
+        return searchKey;
     }
 
     protected abstract int doSize();
