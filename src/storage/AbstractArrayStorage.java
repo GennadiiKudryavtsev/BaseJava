@@ -62,7 +62,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        return null;
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i].equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override

@@ -83,8 +83,10 @@ public abstract class  AbstractArrayStorageTest {
 
     @Test
     void updateIfExist() {
-        Resume newResume = new Resume("uuid1Test");
+        Resume newResume = new Resume(UUID_1);
         assertThrows(ExistStorageException.class, () -> storage.update(newResume));
+        assertTrue(newResume.equals(storage.get(UUID_1)));
+
     }
 
     @Test
