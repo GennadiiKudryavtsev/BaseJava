@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -84,7 +86,7 @@ public abstract class  AbstractArrayStorageTest {
     @Test
     void updateIfExist() {
         Resume newResume = new Resume(UUID_1);
-        assertThrows(ExistStorageException.class, () -> storage.update(newResume));
+        storage.update(newResume);
         assertTrue(newResume.equals(storage.get(UUID_1)));
 
     }
