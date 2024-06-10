@@ -87,7 +87,7 @@ public abstract class  AbstractArrayStorageTest {
     void updateIfExist() {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
-        assertTrue(newResume.equals(storage.get(UUID_1)));
+        assertSame(newResume, storage.get(UUID_1));
 
     }
 
