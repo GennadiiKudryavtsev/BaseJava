@@ -17,10 +17,10 @@ class MapStorageTest {
     protected final String UUID_2 = "uuid2Test";
     protected final String UUID_3 = "uuid3Test";
     protected final String UUID_4 = "uuid4Test";
-    protected final Resume RESUME1 = new Resume(UUID_1);
-    protected final Resume RESUME2 = new Resume(UUID_2);
-    protected final Resume RESUME3 = new Resume(UUID_3);
-    protected final Resume RESUME4 = new Resume(UUID_4);
+    protected final Resume RESUME1 = new Resume(UUID_1, "Name");
+    protected final Resume RESUME2 = new Resume(UUID_2, "Name");
+    protected final Resume RESUME3 = new Resume(UUID_3, "Name");
+    protected final Resume RESUME4 = new Resume(UUID_4, "Name");
 
     @BeforeEach
     public void setUp() {
@@ -43,7 +43,9 @@ class MapStorageTest {
 
     @Test
     void updateIfExis() {
-        assertThrows(ExistStorageException.class, () -> storage.update(RESUME1));
+        Resume newResume = new Resume("uuid1Test", "New Name");
+        storage.update(newResume);
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test
@@ -72,7 +74,7 @@ class MapStorageTest {
 
     @Test
     void getAll() {
-        assertEquals(storage.size(), storage.getAll().length);
+        assertEquals(storage.size(), storage.getAllSorted().size());
     }
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));

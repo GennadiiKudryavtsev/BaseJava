@@ -16,10 +16,10 @@ class ListStorageTest {
     protected final String UUID_2 = "uuid2Test";
     protected final String UUID_3 = "uuid3Test";
     protected final String UUID_4 = "uuid4Test";
-    protected final Resume RESUME1 = new Resume(UUID_1);
-    protected final Resume RESUME2 = new Resume(UUID_2);
-    protected final Resume RESUME3 = new Resume(UUID_3);
-    protected final Resume RESUME4 = new Resume(UUID_4);
+    protected final Resume RESUME1 = new Resume(UUID_1, "Name");
+    protected final Resume RESUME2 = new Resume(UUID_2, "Name");
+    protected final Resume RESUME3 = new Resume(UUID_3, "Name");
+    protected final Resume RESUME4 = new Resume(UUID_4, "Name");
 
     @BeforeEach
     public void setUp() {
@@ -55,12 +55,14 @@ class ListStorageTest {
 
     @Test
     void updateIfExist() {
-        assertThrows(ExistStorageException.class, () -> storage.update(RESUME1));
+        Resume newResume = new Resume(UUID_1, "New Name");
+        storage.update(newResume);
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test
     void delete() {
-        storage.delete(RESUME1.getUuid());
+        storage.delete(UUID_1);
         Assertions.assertThrows(NotExistStorageException.class, () -> storage.delete(RESUME1.getUuid()));
         assertSize(2);
     }
@@ -77,6 +79,6 @@ class ListStorageTest {
 
     @Test
     void getAll() {
-        assertEquals(storage.size(), storage.getAll().length);
+        assertEquals(storage.size(), storage.getAllSorted().size());
     }
 }
