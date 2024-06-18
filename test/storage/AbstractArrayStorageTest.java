@@ -1,6 +1,5 @@
 package storage;
 
-import exceptions.ExistStorageException;
 import exceptions.NotExistStorageException;
 import exceptions.StorageException;
 import model.Resume;
@@ -8,27 +7,25 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class  AbstractArrayStorageTest {
+public abstract class AbstractArrayStorageTest {
 
     protected final String UUID_1 = "uuid1Test";
     protected final String UUID_2 = "uuid2Test";
     protected final String UUID_3 = "uuid3Test";
-    protected final Resume RESUME1 = new Resume(UUID_1);
-    protected final Resume RESUME2 = new Resume(UUID_2);
-    protected final Resume RESUME3 = new Resume(UUID_3);
-    protected final Resume RESUME4 = new Resume("uuid4Test");
+    protected final Resume RESUME1 = new Resume(UUID_1, "Name");
+    protected final Resume RESUME2 = new Resume(UUID_2, "Name");
+    protected final Resume RESUME3 = new Resume(UUID_3, "Name");
+    protected final Resume RESUME4 = new Resume("uuid4Test", "Name");
 
     protected final Storage storage;
-    protected final int size = 3;
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
+
+    protected final int size = 3;
 
     @BeforeEach
     public void setUp() {
@@ -57,6 +54,15 @@ public abstract class  AbstractArrayStorageTest {
         assertSize(size + 1);
     }
 
+
+    @Test
+    void saveOverflow() {
+        while (storage.size() < AbstractArrayStorage.STORAGE_LIMIT) {
+            storage.save(new Resume("uuid"));
+        }
+        Assertions.assertThrows(StorageException.class, () -> storage.save(new Resume("uuid")));
+    }
+
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
     }
@@ -70,24 +76,15 @@ public abstract class  AbstractArrayStorageTest {
     }
 
     @Test
-    void saveIfStorageCrowded() {
-        while (storage.size() < AbstractArrayStorage.STORAGE_LIMIT) {
-            Resume r = new Resume();
-            storage.save(r);
-        }
-        Assertions.assertThrows(StorageException.class, () -> storage.save(new Resume()));
-    }
-
-    @Test
     void updateIfNotExist() {
         Assertions.assertThrows(NotExistStorageException.class, () -> storage.update(RESUME4));
     }
 
     @Test
     void updateIfExist() {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
-        assertSame(newResume, storage.get(UUID_1));
+        assertSame(newResume, storage.get(RESUME1.getUuid()));
 
     }
 
@@ -110,7 +107,6 @@ public abstract class  AbstractArrayStorageTest {
 
     @Test
     void getAll() {
-        assertEquals(size, storage.getAll().length);
+        assertEquals(size, storage.getAllSorted().size());
     }
-
 }
