@@ -2,10 +2,12 @@ package storage;
 
 import model.Resume;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage{
+public class MapStorage extends AbstractStorage<String> {
 
     protected Map<String, Resume> map = new HashMap<>();
     @Override
@@ -19,37 +21,37 @@ public class MapStorage extends AbstractStorage{
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        map.replace((String) searchKey, r);
+    protected void doUpdate(Resume r, String searchKey) {
+        map.replace(searchKey, r);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, String searchKey) {
         map.put(r.getUuid(), r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
+    protected void doDelete(String searchKey) {
         map.remove(searchKey);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
+    protected Resume doGet(String searchKey) {
         return map.get(searchKey);
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         return uuid;
     }
 
     @Override
-    protected boolean isExisting(Object searchKey) {
+    protected boolean isExisting(String searchKey) {
         return map.containsKey(searchKey);
     }
 
     @Override
-    public Resume[] getAll() {
-        return map.values().toArray(new Resume[0]);
+    public List<Resume> getAllSorted() {
+        return new ArrayList(map.values());
     }
 }

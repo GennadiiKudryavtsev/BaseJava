@@ -5,7 +5,7 @@ import model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage{
+public class ListStorage extends AbstractStorage<Integer>{
 
     protected List<Resume> list = new ArrayList<>();
 
@@ -20,27 +20,28 @@ public class ListStorage extends AbstractStorage{
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        list.set((int)searchKey, r);
+    protected void doUpdate(Resume r, Integer searchKey) {
+        list.set(searchKey, r);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, Integer searchKey) {
         list.add(r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
+    protected void doDelete(Integer searchKey) {
         list.remove((int)searchKey);
+        System.out.println(list.size());
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return list.get((int) searchKey);
+    protected Resume doGet(Integer searchKey) {
+        return list.get(searchKey);
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -50,14 +51,14 @@ public class ListStorage extends AbstractStorage{
     }
 
     @Override
-    protected boolean isExisting(Object searchKey) {
-        return (int)searchKey >= 0;
+    protected boolean isExisting(Integer searchKey) {
+        return searchKey >= 0;
     }
 
 
     @Override
-    public Resume[] getAll() {
-        return list.toArray(new Resume[0]);
+    public List<Resume> getAllSorted() {
+        return list;
     }
 
 }
