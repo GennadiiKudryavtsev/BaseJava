@@ -3,7 +3,10 @@ package storage;
 import exceptions.*;
 import model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -51,8 +54,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> getAllSorted() {
+        List<Resume> list = Arrays.asList(Arrays.copyOf(storage, size));
+        Collections.sort(list);
+        System.out.println(list);
+        return list;
     }
 
     protected abstract void fillDeletedElement(int index);
