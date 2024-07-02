@@ -1,7 +1,6 @@
 package model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -11,6 +10,11 @@ public class Resume implements Comparable<Resume>{
     // Unique identifier
     private final String uuid;
     private final String fullName;
+
+    private final Map<SectionsContact, String> mapContact = new EnumMap<>(SectionsContact.class);
+    private final Map<SectionType, String> mapSectionType = new EnumMap<>(SectionType.class);
+    private final List<TextSection> listInfo = new ArrayList<>();
+    private final List<CompanySection> listCompany = new ArrayList<>();
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -29,22 +33,48 @@ public class Resume implements Comparable<Resume>{
         return uuid;
     }
 
+    public Map<SectionsContact, String> getMapContact() {
+        return mapContact;
+    }
+
+    public Map<SectionType, String> getMapSectionType() {
+        return mapSectionType;
+    }
+
+    public List<TextSection> getListInfo() {
+        return listInfo;
+    }
+
+    public List<CompanySection> getLsitCompany() {
+        return listCompany;
+    }
+
+    @Override
+    public String toString() {
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", mapContact=" + mapContact +
+                ", mapSectionType=" + mapSectionType +
+                ", listInfo=" + listInfo +
+                ", listCompany=" + listCompany +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName);
+        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName) &&
+                Objects.equals(mapContact, resume.mapContact) && Objects.equals(mapSectionType,
+                resume.mapSectionType) && Objects.equals(listInfo, resume.listInfo) &&
+                Objects.equals(listCompany, resume.listCompany);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
-    }
-
-    @Override
-    public String toString() {
-        return uuid + '\''+ fullName;
+        return Objects.hash(uuid, fullName, mapContact, mapSectionType, listInfo, listCompany);
     }
 
     @Override
