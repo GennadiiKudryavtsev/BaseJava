@@ -12,9 +12,7 @@ public class Resume implements Comparable<Resume>{
     private final String fullName;
 
     private final Map<SectionsContact, String> mapContact = new EnumMap<>(SectionsContact.class);
-    private final Map<SectionType, String> mapSectionType = new EnumMap<>(SectionType.class);
-    private final List<TextSection> listInfo = new ArrayList<>();
-    private final List<CompanySection> listCompany = new ArrayList<>();
+    private final Map<SectionType, Section> mapSectionType = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -37,16 +35,8 @@ public class Resume implements Comparable<Resume>{
         return mapContact;
     }
 
-    public Map<SectionType, String> getMapSectionType() {
+    public Map<SectionType, Section> getMapSectionType() {
         return mapSectionType;
-    }
-
-    public List<TextSection> getListInfo() {
-        return listInfo;
-    }
-
-    public List<CompanySection> getLsitCompany() {
-        return listCompany;
     }
 
     @Override
@@ -56,8 +46,6 @@ public class Resume implements Comparable<Resume>{
                 ", fullName='" + fullName + '\'' +
                 ", mapContact=" + mapContact +
                 ", mapSectionType=" + mapSectionType +
-                ", listInfo=" + listInfo +
-                ", listCompany=" + listCompany +
                 '}';
     }
 
@@ -68,13 +56,12 @@ public class Resume implements Comparable<Resume>{
         Resume resume = (Resume) o;
         return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName) &&
                 Objects.equals(mapContact, resume.mapContact) && Objects.equals(mapSectionType,
-                resume.mapSectionType) && Objects.equals(listInfo, resume.listInfo) &&
-                Objects.equals(listCompany, resume.listCompany);
+                resume.mapSectionType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName, mapContact, mapSectionType, listInfo, listCompany);
+        return Objects.hash(uuid, fullName, mapContact, mapSectionType);
     }
 
     @Override
