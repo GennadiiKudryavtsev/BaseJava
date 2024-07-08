@@ -2,20 +2,37 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CompanySection extends Section {
 
-    public List<Company> organization = new ArrayList<>();
+    public List<Company> companies = new ArrayList<>();
 
-//    public CompanySection(List<Company> organization) {
-//        this.organization = organization;
-//    }
-
-    public List<Company> getOrganization() {
-        return organization;
+    public List<Company> getCompanies() {
+        return companies;
     }
 
-    public void setOrganization(List<Company> organization) {
-        this.organization = organization;
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompanySection that = (CompanySection) o;
+        return Objects.equals(companies, that.companies);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(companies);
+    }
+
+    @Override
+    public String toString() {
+        return "CompanySection{" +
+                "companies=" + companies +
+                '}';
     }
 }

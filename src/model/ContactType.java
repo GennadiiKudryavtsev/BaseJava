@@ -1,6 +1,6 @@
 package model;
 
-public enum SectionsContact {
+public enum ContactType {
     PHONE("Тел.: "),
     MOBILE_PHONE("Мобильный тел.: "),
     HOME_PHONE("Домашний тел.: "),
@@ -14,7 +14,7 @@ public enum SectionsContact {
 
     private String contactType;
 
-    SectionsContact(String contactType) {
+    ContactType(String contactType) {
         this.contactType = contactType;
     }
 

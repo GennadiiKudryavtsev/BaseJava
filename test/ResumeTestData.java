@@ -1,4 +1,4 @@
-package model;
+import model.*;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -66,13 +66,13 @@ public class ResumeTestData {
     }
     public static void addContact(String phoneNum, String skype, String email, String linkedin,
                                   String github, String stackoverflow) {
-        resume.getMapContact().put(SectionsContact.PHONE, phoneNum);
-        resume.getMapContact().put(SectionsContact.SKYPE, skype);
-        resume.getMapContact().put(SectionsContact.EMAIL, email);
-        resume.getMapContact().put(SectionsContact.LINKEDIN, linkedin);
-        resume.getMapContact().put(SectionsContact.GITHUB, github);
-        resume.getMapContact().put(SectionsContact.STACKOVERFLOW, stackoverflow);
-        for (Map.Entry<SectionsContact, String> entry : resume.getMapContact().entrySet()) {
+        resume.getMapContact().put(ContactType.PHONE, phoneNum);
+        resume.getMapContact().put(ContactType.SKYPE, skype);
+        resume.getMapContact().put(ContactType.EMAIL, email);
+        resume.getMapContact().put(ContactType.LINKEDIN, linkedin);
+        resume.getMapContact().put(ContactType.GITHUB, github);
+        resume.getMapContact().put(ContactType.STACKOVERFLOW, stackoverflow);
+        for (Map.Entry<ContactType, String> entry : resume.getMapContact().entrySet()) {
             System.out.println(entry.getKey().getContactType() + entry.getValue());
         }
     }
@@ -99,21 +99,21 @@ public class ResumeTestData {
         Period period = new Period(firstDate, endDate, title, description);
 
         Company company = new Company(nameCompany, url);
-        company.getListPeriod().add(period);
+        company.getPeriods().add(period);
 
         CompanySection companySection = new CompanySection();
-        companySection.getOrganization().add(company);
+        companySection.getCompanies().add(company);
 
         resume.getMapSectionType().put(SectionType.EXPERIENCE, companySection);
 
         if (resume.getMapSectionType().containsValue(companySection)) {
-            for (int i = 0; i < companySection.getOrganization().size(); i++) {
-                if (companySection.getOrganization().get(i).equals(company)) {
-                    System.out.println(company.getListPeriod().get(i).getStartDay() + " - " +
-                            company.getListPeriod().get(i).getEndDay() + "\n" +
+            for (int i = 0; i < companySection.getCompanies().size(); i++) {
+                if (companySection.getCompanies().get(i).equals(company)) {
+                    System.out.println(company.getPeriods().get(i).getStartDate() + " - " +
+                            company.getPeriods().get(i).getEndDate() + "\n" +
                             company.getName() + "\n" + company.getWebsite() + "\n" +
-                            company.getListPeriod().get(i).getTitle() + "\n" +
-                            company.getListPeriod().get(i).getDescription());
+                            company.getPeriods().get(i).getTitle() + "\n" +
+                            company.getPeriods().get(i).getDescription());
                 }
             }
         }
