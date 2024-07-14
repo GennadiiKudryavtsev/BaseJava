@@ -1,3 +1,5 @@
+package model;
+
 import model.*;
 
 import java.time.LocalDate;
@@ -5,6 +7,8 @@ import java.util.Map;
 
 public class ResumeTestData {
     static Resume resume;
+    static CompanySection educationCompany = new CompanySection();;
+    static CompanySection experience = new CompanySection();;
 
     public static void main(String[] args) {
         resume = new Resume("Борисов Алексей Борисович\n");
@@ -40,26 +44,45 @@ public class ResumeTestData {
                 "Родной русский, английский \"upper intermediate\"\n");
 
         addTitleSection(SectionType.EXPERIENCE.getTitle());
-        addOrganisation("2020-10-01", "2022-01-01",
+        addOrganisation(SectionType.EXPERIENCE,"2020-10-01", "2022-01-01",
                 "Java Online Projects", "https://javaops.ru/",
                 "Автор проекта.", "Создание, организация и проведение " +
                         "Java онлайн проектов и стажировок.\n");
 
-        addOrganisation("2015-01-02", "2016-02-01",
+        addOrganisation(SectionType.EXPERIENCE,"2000-05-07", "2016-02-01",
+                "Java Online Projects", "https://www.wrike.com/vao/",
+                "uuuuu",
+                        "Пmmmmmmmmmmmmmm2, JWT SSO.\n");
+
+        addOrganisation(SectionType.EXPERIENCE,"2015-01-02", "2016-02-01",
                 "Wrike", "https://www.wrike.com/vao/",
                 "Старший разработчик (backend)",
-                        "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                                "(Java 8 API, Maven, Spring, \nMyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
-                                "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.\n");
+                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                        "(Java 8 API, Maven, Spring, \nMyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.\n");
 
         addTitleSection(SectionType.EDUCATION.getTitle());
-        addOrganisation("2013-05-06", "2013-10-01",
+        addOrganisation(SectionType.EDUCATION,"2013-05-06", "2013-10-01",
                 "Coursera", "https://www.coursera.org/learn/scala-functional-programming", "",
                         "'Functional Programming Principles in Scala' by Martin Odersky\n");
 
-        addOrganisation("2011-03-01", "2013-04-01",
+        addOrganisation(SectionType.EDUCATION,"2011-03-01", "2013-04-01",
                 "Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
-                "","Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'");
+                "","Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'\n");
+
+        addOrganisation(SectionType.EDUCATION,"1993-09-01", "1996-07-01",
+                "Санкт-Петербургский национальный исследовательский университет информационных технологий, " +
+                        "механики и оптики", "https://itmo.ru/",
+                "", "Аспирантура (программист С, С++)\n");
+
+        addOrganisation(SectionType.EDUCATION,"2000-09-01", "2001-07-01",
+                "Санкт-Петербургский национальный исследовательский университет информационных технологий, " +
+                        "механики и оптики", "https://itmo.ru/",
+                "", "Инженер (программист Fortran, C)");
+
+        resume.getMapSectionType().put(SectionType.EDUCATION, educationCompany);
+        resume.getMapSectionType().put(SectionType.EXPERIENCE, experience);
+
     }
     public static void addFullName(Resume r) {
         System.out.println(r.getFullName());
@@ -90,32 +113,49 @@ public class ResumeTestData {
         }
     }
 
-    public static void addOrganisation(String startDate, String lastDate, String nameCompany,
+    public static void addOrganisation(SectionType sectionType, String startDate, String lastDate, String nameCompany,
                                        String url, String title, String description) {
 
         LocalDate firstDate = LocalDate.parse(startDate);
         LocalDate endDate = LocalDate.parse(lastDate);
-
         Period period = new Period(firstDate, endDate, title, description);
 
         Company company = new Company(nameCompany, url);
         company.getPeriods().add(period);
 
-        CompanySection companySection = new CompanySection();
-        companySection.getCompanies().add(company);
+        if (sectionType == SectionType.EDUCATION) {
+            nameCompany = checkSection(educationCompany, nameCompany);
+            }
+        if (sectionType == SectionType.EXPERIENCE) {
+            nameCompany = checkSection(experience, nameCompany);
+            }
 
-        resume.getMapSectionType().put(SectionType.EXPERIENCE, companySection);
 
-        if (resume.getMapSectionType().containsValue(companySection)) {
-            for (int i = 0; i < companySection.getCompanies().size(); i++) {
-                if (companySection.getCompanies().get(i).equals(company)) {
-                    System.out.println(company.getPeriods().get(i).getStartDate() + " - " +
-                            company.getPeriods().get(i).getEndDate() + "\n" +
-                            company.getName() + "\n" + company.getWebsite() + "\n" +
-                            company.getPeriods().get(i).getTitle() + "\n" +
-                            company.getPeriods().get(i).getDescription());
+        addInList(sectionType, company);
+        for (int i = 0; i < company.getPeriods().size(); i++) {
+            System.out.println(company.getPeriods().get(i).getStartDate() + " - "
+            + company.getPeriods().get(i).getEndDate() + "\n" + nameCompany + "\n"
+            + company.getWebsite() + "\n" + company.getPeriods().get(i).getTitle() + "\n"
+            + company.getPeriods().get(i).getDescription());
+        }
+    }
+
+    public static String checkSection(CompanySection companySection, String checkName) {
+            for (int j = 0; j < companySection.getCompanies().size(); j++) {
+                if (companySection.getCompanies().get(j).getName().equals(checkName)) {
+                    return "";
                 }
             }
+            return checkName;
+    }
+
+
+    public static void addInList(SectionType sectionType, Company company) {
+        if (sectionType == SectionType.EDUCATION) {
+            educationCompany.getCompanies().add(company);
+        }
+        if (sectionType == SectionType.EXPERIENCE){
+            experience.getCompanies().add(company);
         }
     }
 
