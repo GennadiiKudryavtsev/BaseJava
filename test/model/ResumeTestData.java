@@ -51,8 +51,8 @@ public class ResumeTestData {
 
         addOrganisation(SectionType.EXPERIENCE,"2000-05-07", "2016-02-01",
                 "Java Online Projects", "https://www.wrike.com/vao/",
-                "uuuuu",
-                        "Пmmmmmmmmmmmmmm2, JWT SSO.\n");
+                "Стажер",
+                        "Развитие проекта и поддержка проекта.\n");
 
         addOrganisation(SectionType.EXPERIENCE,"2015-01-02", "2016-02-01",
                 "Wrike", "https://www.wrike.com/vao/",
