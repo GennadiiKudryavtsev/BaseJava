@@ -3,9 +3,15 @@ package storage;
 import exceptions.NotExistStorageException;
 import exceptions.StorageException;
 import model.Resume;
+import model.ResumeTestData;
+import model.SectionType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,13 +25,15 @@ public abstract class AbstractArrayStorageTest {
     protected final Resume RESUME3 = new Resume(UUID_3, "Name");
     protected final Resume RESUME4 = new Resume("uuid4Test", "Name");
 
+    ResumeTestData resumeTestData = new ResumeTestData();
+    protected final Resume RESUME5 = resumeTestData.createResume("uuid5", "Ivanov Ivan Ivanovich");
     protected final Storage storage;
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
-    protected final int size = 3;
+    protected final int size = 4;
 
     @BeforeEach
     public void setUp() {
@@ -33,6 +41,8 @@ public abstract class AbstractArrayStorageTest {
         storage.save(RESUME1);
         storage.save(RESUME2);
         storage.save(RESUME3);
+        storage.save(RESUME5);
+
     }
 
     @Test
@@ -53,7 +63,6 @@ public abstract class AbstractArrayStorageTest {
         assertGet(RESUME4);
         assertSize(size + 1);
     }
-
 
     @Test
     void saveOverflow() {
@@ -98,6 +107,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     void get() {
         assertGet(RESUME1);
+        assertGet(RESUME5);
     }
 
     @Test
