@@ -2,11 +2,9 @@ package storage;
 
 import exceptions.StorageException;
 import model.Resume;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File>{
     private File directory;
@@ -24,17 +22,29 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
 
     @Override
     protected int doSize() {
-        return 0;
+        try {
+            return doSizeFiles();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     protected void doClear() {
-
+        File[] dir = directory.listFiles();
+        if (dir == null) return;
+        for (File f: dir) {
+           f.delete();
+        }
     }
 
     @Override
     protected void doUpdate(Resume r, File file) {
-
+        try {
+            doWrite(r, file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
@@ -47,16 +57,18 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
         }
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
-
     @Override
-    protected void doDelete(File file) {
-
+    protected void doDelete(File file) { // удаляет файл
+        file.delete();
     }
 
     @Override
     protected Resume doGet(File file) {
-        return null;
+        try {
+            return doRead(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -70,7 +82,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        return null;
+    public List<Resume> doCopyAll() {
+        File file = new File(directory.getAbsolutePath());
+        File[] files = file.listFiles();
+        assert files != null;
+        List<Object> o = new ArrayList<>(Arrays.asList(files));
+        List<Resume> listResumes = new ArrayList<>((Collection) o);
+        for (int i = 0; i<o.size(); i++) {
+            System.out.println(o.get(i));
+        }
+        return listResumes;
     }
+
+    protected abstract void doWrite(Resume r, File file) throws IOException;
+    protected abstract Resume doRead(File file) throws IOException;
+    protected abstract int doSizeFiles() throws IOException;
+
 }
