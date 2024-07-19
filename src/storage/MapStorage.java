@@ -51,7 +51,7 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
+    public List<Resume> doCopyAll() {
         return new ArrayList(map.values());
     }
 }

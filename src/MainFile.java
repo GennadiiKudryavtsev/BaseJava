@@ -14,18 +14,18 @@ public class MainFile {
         File[] lst = file.listFiles();
         if (lst == null) return;
         Arrays.sort(lst);
-        for (int i = 0; i < lst.length; i++) {
-            if (lst[i].isDirectory()) {
-                if (lst[i].getName().equals(".git")){
+        for (File value : lst) {
+            if (value.isDirectory()) {
+                if (value.getName().equals(".git")) {
                     continue;
                 }
-                System.out.println(lst[i].getName());
-                printFiles(lst[i]);
+                System.out.println(value.getName());
+                printFiles(value);
             }
         }
-        for (int i = 0; i < lst.length; i++) {
-            if (!lst[i].isDirectory()) {
-                System.out.println(" " + lst[i].getName());
+        for (File value : lst) {
+            if (!value.isDirectory()) {
+                System.out.println(" " + value.getName());
             }
         }
         System.out.println();
