@@ -4,6 +4,7 @@ import exceptions.ExistStorageException;
 import exceptions.NotExistStorageException;
 import model.Resume;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
