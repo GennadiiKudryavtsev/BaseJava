@@ -1,22 +1,21 @@
 package storage;
 
-import exceptions.NotExistStorageException;
-import exceptions.StorageException;
-import model.Resume;
+import com.urise.webapp.exceptions.NotExistStorageException;
+import com.urise.webapp.exceptions.StorageException;
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.AbstractArrayStorage;
+import com.urise.webapp.storage.Storage;
 import model.ResumeTestData;
-import model.SectionType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.*;
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractArrayStorageTest {
-
+    protected static final File STORAGE_DIR = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
     protected final String UUID_1 = "uuid1Test";
     protected final String UUID_2 = "uuid2Test";
     protected final String UUID_3 = "uuid3Test";

@@ -1,4 +1,4 @@
-package exceptions;
+package com.urise.webapp.exceptions;
 
 public class NotExistStorageException extends StorageException{
     public NotExistStorageException(String uuid) {

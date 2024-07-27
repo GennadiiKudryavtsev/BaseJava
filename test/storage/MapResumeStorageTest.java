@@ -1,6 +1,8 @@
 package storage;
 
-import model.Resume;
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.MapResumeStorage;
+import com.urise.webapp.storage.Storage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

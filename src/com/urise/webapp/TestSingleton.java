@@ -1,4 +1,6 @@
-import model.SectionType;
+package com.urise.webapp;
+
+import com.urise.webapp.model.SectionType;
 
 public class TestSingleton {
     private static TestSingleton instance;

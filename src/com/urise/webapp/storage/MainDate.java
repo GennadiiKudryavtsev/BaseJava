@@ -1,4 +1,4 @@
-package storage;
+package com.urise.webapp.storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

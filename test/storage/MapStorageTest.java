@@ -1,8 +1,9 @@
 package storage;
 
-import exceptions.ExistStorageException;
-import exceptions.NotExistStorageException;
-import model.Resume;
+import com.urise.webapp.exceptions.NotExistStorageException;
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.MapStorage;
+import com.urise.webapp.storage.Storage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,9 @@
-package storage;
+package com.urise.webapp.storage;
 
-import exceptions.ExistStorageException;
-import exceptions.NotExistStorageException;
-import model.Resume;
+import com.urise.webapp.exceptions.ExistStorageException;
+import com.urise.webapp.exceptions.NotExistStorageException;
+import com.urise.webapp.model.Resume;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;

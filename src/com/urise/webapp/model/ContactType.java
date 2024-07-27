@@ -1,4 +1,4 @@
-package model;
+package com.urise.webapp.model;
 
 public enum ContactType {
     PHONE("Тел.: "),
