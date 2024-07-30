@@ -2,9 +2,7 @@ package storage;
 
 import com.urise.webapp.exceptions.NotExistStorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ContexStrategy;
-import com.urise.webapp.storage.ObjectStreamStorage;
-import com.urise.webapp.storage.Storage;
+import com.urise.webapp.storage.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,11 +21,8 @@ class AbstractFileStorageTest{
     protected final Resume RESUME2 = new Resume(UUID_2, "Name");
     protected final Resume RESUME3 = new Resume(UUID_3, "Name");
     protected final Resume RESUME4 = new Resume(UUID_4, "Name");
-     File file = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
-    protected final Storage storage = new ObjectStreamStorage(
-            file);
-     ContexStrategy contexStrategy = new ContexStrategy(new ObjectStreamStorage(file));
-
+    File file = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
+    protected final Storage storage = new ObjectStreamStorage(file);
 
     @BeforeEach
     public void setUp() {
@@ -36,8 +31,6 @@ class AbstractFileStorageTest{
         storage.save(RESUME2);
         storage.save(RESUME3);
     }
-
-
     @Test
     void doSize() {
         assertSize(3);
