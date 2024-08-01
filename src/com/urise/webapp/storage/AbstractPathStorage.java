@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractPathStorage extends AbstractStorage<Path>{
+public class AbstractPathStorage extends AbstractStorage<Path> {
     private Path directory;
     private Strategy strategy;
 
