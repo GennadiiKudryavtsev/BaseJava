@@ -7,6 +7,7 @@ import java.util.*;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File>{
     private File directory;
+    Strategy strategy;
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
@@ -55,8 +56,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
-//            readWrite.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+//            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            strategy.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
 
         }catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
@@ -107,7 +108,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
         return files;
     }
 
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-    protected abstract Resume doRead(InputStream is) throws IOException;
+//    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
+//    protected abstract Resume doRead(InputStream is) throws IOException;
+
+    protected  void doWrite(Resume r, OutputStream os) throws IOException {
+        strategy.doWrite(r, os);
+    }
+    protected Resume doRead(InputStream is) throws IOException
+    {
+        return strategy.doRead(is);
+    }
 
 }

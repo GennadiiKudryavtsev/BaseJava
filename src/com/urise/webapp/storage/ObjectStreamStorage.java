@@ -4,7 +4,7 @@ import com.urise.webapp.exceptions.StorageException;
 import com.urise.webapp.model.Resume;
 import java.io.*;
 
-public class ObjectStreamStorage extends AbstractFileStorage {
+public class ObjectStreamStorage extends AbstractFileStorage implements Strategy {
 
         public ObjectStreamStorage(File directory) {
         super(directory);
