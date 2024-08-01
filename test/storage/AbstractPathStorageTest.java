@@ -3,9 +3,12 @@ package storage;
 import com.urise.webapp.exceptions.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.*;
+import com.urise.webapp.storage.strategy.ObjectStreamStorage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractPathStorageTest {
@@ -18,8 +21,9 @@ class AbstractPathStorageTest {
     protected final Resume RESUME2 = new Resume(UUID_2, "Name");
     protected final Resume RESUME3 = new Resume(UUID_3, "Name");
     protected final Resume RESUME4 = new Resume(UUID_4, "Name");
+    Path path = Paths.get("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
 
-    protected final Storage storage = new ObjectStreamPathStorage("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
+    protected final Storage storage = new AbstractPathStorage(path.toString(), new ObjectStreamStorage());
 
     @BeforeEach
     public void setUp() {

@@ -3,15 +3,14 @@ package storage;
 import com.urise.webapp.exceptions.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.*;
+import com.urise.webapp.storage.strategy.ObjectStreamStorage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.File;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractFileStorageTest{
+public class AbstractFileStorageTest{
 
     protected final String UUID_1 = "uuid1Test";
     protected final String UUID_2 = "uuid2Test";
@@ -22,7 +21,7 @@ class AbstractFileStorageTest{
     protected final Resume RESUME3 = new Resume(UUID_3, "Name");
     protected final Resume RESUME4 = new Resume(UUID_4, "Name");
     File file = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
-    protected final Storage storage = new ObjectStreamStorage(file);
+    protected Storage storage = new AbstractFileStorage(file, new ObjectStreamStorage());
 
     @BeforeEach
     public void setUp() {

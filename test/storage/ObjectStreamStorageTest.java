@@ -1,11 +1,11 @@
 package storage;
 
-import com.urise.webapp.storage.ObjectStreamStorage;
-import com.urise.webapp.storage.Storage;
+import com.urise.webapp.storage.AbstractFileStorage;
+import com.urise.webapp.storage.strategy.ObjectStreamStorage;
 
 class ObjectStreamStorageTest extends AbstractArrayStorageTest {
 
-    public ObjectStreamStorageTest(Storage storage) {
-        super(new ObjectStreamStorage(STORAGE_DIR));
+    public ObjectStreamStorageTest() {
+        super(new AbstractFileStorage(STORAGE_DIR, new ObjectStreamStorage()));
     }
 }
