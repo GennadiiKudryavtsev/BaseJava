@@ -6,10 +6,10 @@ import com.urise.webapp.storage.strategy.Strategy;
 import java.io.*;
 import java.util.*;
 
-public class AbstractFileStorage extends AbstractStorage<File>{
+public class FileStorage extends AbstractStorage<File>{
     private File directory;
     private Strategy strategy;
-    public AbstractFileStorage(File directory, Strategy strategy) {
+    public FileStorage(File directory, Strategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         this.strategy = strategy;
         if (!directory.isDirectory()) {

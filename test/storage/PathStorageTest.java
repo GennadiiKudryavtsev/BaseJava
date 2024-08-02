@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractPathStorageTest {
+class PathStorageTest {
 
     protected final String UUID_1 = "uuid1Test";
     protected final String UUID_2 = "uuid2Test";
@@ -23,7 +23,7 @@ class AbstractPathStorageTest {
     protected final Resume RESUME4 = new Resume(UUID_4, "Name");
     Path path = Paths.get("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
 
-    protected final Storage storage = new AbstractPathStorage(path.toString(), new ObjectStreamStorage());
+    protected final Storage storage = new PathStorage(path.toString(), new ObjectStreamStorage());
 
     @BeforeEach
     public void setUp() {

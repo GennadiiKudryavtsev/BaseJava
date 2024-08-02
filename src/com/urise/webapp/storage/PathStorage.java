@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
     private Strategy strategy;
 
-    public AbstractPathStorage(String dir, Strategy strategy) {
+    public PathStorage(String dir, Strategy strategy) {
         this.strategy = strategy;
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AbstractFileStorageTest{
+public class FileStorageTest {
 
     protected final String UUID_1 = "uuid1Test";
     protected final String UUID_2 = "uuid2Test";
@@ -21,7 +21,7 @@ public class AbstractFileStorageTest{
     protected final Resume RESUME3 = new Resume(UUID_3, "Name");
     protected final Resume RESUME4 = new Resume(UUID_4, "Name");
     File file = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
-    protected Storage storage = new AbstractFileStorage(file, new ObjectStreamStorage());
+    protected Storage storage = new FileStorage(file, new ObjectStreamStorage());
 
     @BeforeEach
     public void setUp() {
