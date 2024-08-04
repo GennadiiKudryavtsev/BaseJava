@@ -3,12 +3,14 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exceptions.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.strategy.Strategy;
+
 import java.io.*;
 import java.util.*;
 
-public class FileStorage extends AbstractStorage<File>{
-    private File directory;
-    private Strategy strategy;
+public class FileStorage extends AbstractStorage<File> {
+    private final File directory;
+    private final Strategy strategy;
+
     public FileStorage(File directory, Strategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         this.strategy = strategy;
@@ -23,18 +25,15 @@ public class FileStorage extends AbstractStorage<File>{
 
     @Override
     protected int doSize() {
-        int count = 0;
         File[] files = directory.listFiles();
+        assert files != null;
         return files.length;
     }
 
     @Override
     protected void doClear() {
-        if (getListFiles(directory) == null) {
-            throw new StorageException("File not found", null);
-        }
-        for (File f: getListFiles(directory)) {
-                f.delete();
+        for (File f : getListFiles(directory)) {
+            f.delete();
         }
     }
 
@@ -42,7 +41,7 @@ public class FileStorage extends AbstractStorage<File>{
     protected void doUpdate(Resume r, File file) {
         try {
             strategy.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
@@ -50,8 +49,11 @@ public class FileStorage extends AbstractStorage<File>{
     @Override
     protected void doSave(Resume r, File file) {
         try {
-            file.createNewFile();
-        }catch (IOException e) {
+            boolean fileCreated = file.createNewFile();
+            if (!fileCreated) {
+                throw new IOException("File is already exists");
+            }
+        } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
         doUpdate(r, file);
@@ -68,7 +70,7 @@ public class FileStorage extends AbstractStorage<File>{
     protected Resume doGet(File file) {
         try {
             return strategy.doRead(new BufferedInputStream(new FileInputStream(file)));
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

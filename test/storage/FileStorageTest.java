@@ -7,7 +7,9 @@ import com.urise.webapp.storage.strategy.ObjectStreamStorage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileStorageTest {
@@ -30,6 +32,7 @@ public class FileStorageTest {
         storage.save(RESUME2);
         storage.save(RESUME3);
     }
+
     @Test
     void doSize() {
         assertSize(3);
@@ -43,7 +46,7 @@ public class FileStorageTest {
 
     @Test
     void updateIsExist() {
-        Resume newResume= new Resume(UUID_1, "Name");
+        Resume newResume = new Resume(UUID_1, "Name");
         storage.update(RESUME1);
         assertEquals(newResume, storage.get(RESUME1.getUuid()));
     }
@@ -84,6 +87,7 @@ public class FileStorageTest {
     private void assertSize(int expectedSize) {
         assertEquals(expectedSize, storage.size());
     }
+
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
     }

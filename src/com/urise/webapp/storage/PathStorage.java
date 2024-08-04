@@ -3,15 +3,16 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exceptions.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.strategy.Strategy;
+
 import java.io.*;
 import java.nio.file.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
-    private Path directory;
-    private Strategy strategy;
+    private final Path directory;
+    private final Strategy strategy;
 
     public PathStorage(String dir, Strategy strategy) {
         this.strategy = strategy;
@@ -25,8 +26,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected int doSize() {
         try {
-            long count = Files.list(directory).count();
-            return (int)count;
+            return (int) Files.list(directory).count();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,9 +79,8 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected Path  getSearchKey(String uuid) {
-       Path path = directory.resolve(uuid);
-        return path;
+    protected Path getSearchKey(String uuid) {
+        return directory.resolve(uuid);
     }
 
     @Override
@@ -91,15 +90,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public List<Resume> doCopyAll() {
-        List<Resume> listResumes = new ArrayList<>();
-        try {
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directory);
-            for (Path p: directoryStream) {
-                listResumes.add(strategy.doRead(new BufferedInputStream(new FileInputStream(p.toString()))));
-            }
+        try (Stream<Path> pathStream = Files.list(directory)) {
+            return pathStream
+                    .map(this::doGet)
+                    .toList();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Path read error", e);
         }
-        return listResumes;
     }
 }

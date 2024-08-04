@@ -7,8 +7,10 @@ import com.urise.webapp.storage.strategy.ObjectStreamStorage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PathStorageTest {
@@ -47,7 +49,7 @@ class PathStorageTest {
 
     @Test
     void updateIsExist() {
-        Resume newResume= new Resume(UUID_1, "Name");
+        Resume newResume = new Resume(UUID_1, "Name");
         storage.update(RESUME1);
         assertEquals(newResume, storage.get(RESUME1.getUuid()));
     }
@@ -88,6 +90,7 @@ class PathStorageTest {
     private void assertSize(int expectedSize) {
         assertEquals(expectedSize, storage.size());
     }
+
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
     }
