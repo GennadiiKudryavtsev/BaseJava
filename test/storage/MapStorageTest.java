@@ -77,6 +77,7 @@ class MapStorageTest {
     void getAll() {
         assertEquals(storage.size(), storage.getAllSorted().size());
     }
+
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
     }

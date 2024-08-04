@@ -8,14 +8,14 @@ import java.io.*;
 public class ObjectStreamStorage implements Strategy {
 
     @Override
-     public void doWrite(Resume r, OutputStream os) throws IOException {
-            ObjectOutputStream oos = new ObjectOutputStream(os);
-            oos.writeObject(r);
-            oos.close();
+    public void doWrite(Resume r, OutputStream os) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(os);
+        oos.writeObject(r);
+        oos.close();
     }
 
     @Override
-     public Resume doRead(InputStream is){
+    public Resume doRead(InputStream is) {
         try (ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
         } catch (ClassNotFoundException | IOException e) {
