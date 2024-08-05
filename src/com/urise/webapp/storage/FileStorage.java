@@ -25,15 +25,13 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected int doSize() {
-        File[] files = directory.listFiles();
-        assert files != null;
-        return files.length;
+        return getListFiles(directory).length;
     }
 
     @Override
     protected void doClear() {
         for (File f : getListFiles(directory)) {
-            f.delete();
+            doDelete(f);
         }
     }
 
