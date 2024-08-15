@@ -68,7 +68,8 @@ public class FileStorage extends AbstractStorage<File> {
     protected Resume doGet(File file) {
         try {
             return strategy.doRead(new BufferedInputStream(new FileInputStream(file)));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

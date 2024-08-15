@@ -110,8 +110,8 @@ public class ResumeTestData {
     public static void addListSection(String info) {
 
         ListSection list = new ListSection();
-        list.strings.add(info);
-        if (list.strings.contains(info)) {
+        list.getStrings().add(info);
+        if (list.getStrings().contains(info)) {
             System.out.println(info);
         }
     }

@@ -19,19 +19,19 @@ public abstract class AbstractStorage<T> implements Storage {
     }
 
     public final void update(Resume r) {
-        LOG.info("Update " + r);
+//        LOG.info("Update " + r);
         T searchKey = getExistingSearchKey(r.getUuid());
         doUpdate(r, searchKey);
     }
 
     public final void save(Resume r) {
-        LOG.info("Save " + r);
+//        LOG.info("Save " + r);
         T searchKey = getNotExistingSearchKey(r.getUuid());
         doSave(r, searchKey);
     }
 
     public final void delete(String uuid) {
-        LOG.info("Delete " + uuid);
+//        LOG.info("Delete " + uuid);
         T searchKey = getExistingSearchKey(uuid);
         doDelete(searchKey);
     }
@@ -45,7 +45,7 @@ public abstract class AbstractStorage<T> implements Storage {
     private T getExistingSearchKey(String uuid) {
         T searchKey = getSearchKey(uuid);
         if (!isExisting(searchKey)) {
-            LOG.warning("Resume " + uuid + " not exist");
+//            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException((uuid));
         }
         return searchKey;
@@ -53,7 +53,7 @@ public abstract class AbstractStorage<T> implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        LOG.info("getAllSorted");
+//        LOG.info("getAllSorted");
         List<Resume> list = doCopyAll();
         return list;
     }

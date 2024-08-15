@@ -12,7 +12,7 @@ public enum ContactType {
     HOME_PAGE("Домашняя страница");
 
 
-    private String contactType;
+    private final String contactType;
 
     ContactType(String contactType) {
         this.contactType = contactType;
