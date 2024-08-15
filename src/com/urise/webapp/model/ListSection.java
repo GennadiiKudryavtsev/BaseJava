@@ -1,16 +1,24 @@
 package com.urise.webapp.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends Section {
 
     private static final long serialVersionUID = 1L;
-    public List<String> strings = new ArrayList<>();
+    private List<String> strings = new ArrayList<>();
+
+    public ListSection(String... items) {
+        this.strings = Arrays.asList(items);
+    }
+
+    public ListSection() {
+    }
 
     public List<String> getStrings() {
-        return strings;
+         return strings;
     }
 
     public void setStrings(List<String> strings) {
