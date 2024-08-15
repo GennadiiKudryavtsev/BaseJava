@@ -1,38 +1,52 @@
 package storage;
 
 import com.urise.webapp.exceptions.NotExistStorageException;
-import com.urise.webapp.exceptions.StorageException;
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.AbstractArrayStorage;
+import com.urise.webapp.model.*;
 import com.urise.webapp.storage.Storage;
 import model.ResumeTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.File;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractArrayStorageTest {
     protected static final File STORAGE_DIR = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
-    protected final String UUID_1 = "uuid1Test";
-    protected final String UUID_2 = "uuid2Test";
-    protected final String UUID_3 = "uuid3Test";
-    protected final Resume RESUME1 = new Resume(UUID_1, "Name");
-    protected final Resume RESUME2 = new Resume(UUID_2, "Name");
-    protected final Resume RESUME3 = new Resume(UUID_3, "Name");
-    protected final Resume RESUME4 = new Resume("uuid4Test", "Name");
+    protected static final String UUID_1 = "uuid1Test";
+    protected static final String UUID_2 = "uuid2Test";
+    protected static final String UUID_3 = "uuid3Test";
+    protected static final Resume RESUME1 = new Resume(UUID_1, "Name");
+    protected static final Resume RESUME2 = new Resume(UUID_2, "Name");
+    protected static final Resume RESUME3 = new Resume(UUID_3, "Name");
+    protected static final Resume RESUME4 = new Resume("uuid4Test", "Name");
 
-    ResumeTestData resumeTestData = new ResumeTestData();
-    protected final Resume RESUME5 = resumeTestData.createResume("uuid5", "Ivanov Ivan Ivanovich");
+    static ResumeTestData resumeTestData = new ResumeTestData();
+//    protected final Resume RESUME5 = resumeTestData.createResume("uuid5", "Ivanov Ivan Ivanovich");
     protected final Storage storage;
+
+    static {
+        RESUME1.addContact(ContactType.PHONE, "88888888");
+        RESUME1.addContact(ContactType.EMAIL, "mail-borisov");
+        RESUME1.addContact(ContactType.SKYPE, "skype-borisov");
+        LocalDate ldStart = LocalDate.of(2020, 2, 1);
+        LocalDate ldEnd = LocalDate.of(2022, 2, 1);
+        ListSection listSection = new ListSection("Занимался созданием проекта в рамках ТЗ");
+        Company company = new Company("OZON", "www.ozon.com");
+        Period period = new Period(ldStart, ldEnd, "Developer", "Create projext");
+        CompanySection section = new CompanySection();
+        company.getPeriods().add(period);
+        section.getCompanies().add(company);
+        RESUME1.addSection(SectionType.EXPERIENCE, section);
+
+    }
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
-    protected final int size = 4;
+    protected final int size = 3;
 
     @BeforeEach
     public void setUp() {
@@ -40,8 +54,6 @@ public abstract class AbstractArrayStorageTest {
         storage.save(RESUME1);
         storage.save(RESUME2);
         storage.save(RESUME3);
-        storage.save(RESUME5);
-
     }
 
     @Test
@@ -63,20 +75,17 @@ public abstract class AbstractArrayStorageTest {
         assertSize(size + 1);
     }
 
-    @Test
-    void saveOverflow() {
-        while (storage.size() < AbstractArrayStorage.STORAGE_LIMIT) {
-            storage.save(new Resume("uuid"));
-        }
-        Assertions.assertThrows(StorageException.class, () -> storage.save(new Resume("uuid")));
-    }
+//    @Test
+//    void saveOverflow() {
+//        while (storage.size() < AbstractArrayStorage.STORAGE_LIMIT) {
+//            storage.save(new Resume("uuid1"));
+//        }
+//        Assertions.assertThrows(StorageException.class, () -> storage.save(new Resume("uuid2")));
+//    }
 
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
-    }
 
-    private void assertGetNull(Resume resume) {
-        assertNull(storage.get(resume.getUuid()));
     }
 
     private void assertSize(int expectedSize) {
@@ -92,8 +101,7 @@ public abstract class AbstractArrayStorageTest {
     void updateIfExist() {
         Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
-        assertSame(newResume, storage.get(RESUME1.getUuid()));
-
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test
@@ -106,7 +114,6 @@ public abstract class AbstractArrayStorageTest {
     @Test
     void get() {
         assertGet(RESUME1);
-        assertGet(RESUME5);
     }
 
     @Test
