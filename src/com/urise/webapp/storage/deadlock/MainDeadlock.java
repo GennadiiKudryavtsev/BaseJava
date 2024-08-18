@@ -10,11 +10,7 @@ public class MainDeadlock {
         public void run() {
             synchronized (x) {
                 System.out.println("hello1");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                threadMethod();
                 synchronized (y) {
                     System.out.println("bye1");
 
@@ -28,11 +24,7 @@ public class MainDeadlock {
         public void run() {
             synchronized (y) {
                 System.out.println("hello2");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                threadMethod();
                 synchronized (x) {
                     System.out.println("bye2");
 
@@ -40,6 +32,14 @@ public class MainDeadlock {
             }
         }
     };
+
+    public void threadMethod() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
         MainDeadlock m = new MainDeadlock();
