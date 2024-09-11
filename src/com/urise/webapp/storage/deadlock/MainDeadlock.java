@@ -2,7 +2,7 @@ package com.urise.webapp.storage.deadlock;
 
 public class MainDeadlock {
 
-    String x = "abc";
+    String x = "abs";
     String y = "efg";
 
     Thread thread1 = new Thread() {
