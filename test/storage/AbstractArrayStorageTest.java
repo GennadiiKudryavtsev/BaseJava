@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractArrayStorageTest {
-    protected static final File STORAGE_DIR = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
+    protected static final File STORAGE_DIR = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava1/storage");
     protected static final String UUID_1 = "uuid1Test";
     protected static final String UUID_2 = "uuid2Test";
     protected static final String UUID_3 = "uuid3Test";
@@ -26,21 +26,21 @@ public abstract class AbstractArrayStorageTest {
 //    protected final Resume RESUME5 = resumeTestData.createResume("uuid5", "Ivanov Ivan Ivanovich");
     protected final Storage storage;
 
-    static {
-        RESUME1.addContact(ContactType.PHONE, "88888888");
-        RESUME1.addContact(ContactType.EMAIL, "mail-borisov");
-        RESUME1.addContact(ContactType.SKYPE, "skype-borisov");
-        LocalDate ldStart = LocalDate.of(2020, 2, 1);
-        LocalDate ldEnd = LocalDate.of(2022, 2, 1);
-        ListSection listSection = new ListSection("Занимался созданием проекта в рамках ТЗ");
-        Company company = new Company("OZON", "www.ozon.com");
-        Period period = new Period(ldStart, ldEnd, "Developer", "Create projext");
-        CompanySection section = new CompanySection();
-        company.getPeriods().add(period);
-        section.getCompanies().add(company);
-        RESUME1.addSection(SectionType.EXPERIENCE, section);
-
-    }
+//    static {
+//        RESUME1.addContact(ContactType.PHONE, "88888888");
+//        RESUME1.addContact(ContactType.EMAIL, "mail-borisov");
+//        RESUME1.addContact(ContactType.SKYPE, "skype-borisov");
+//        LocalDate ldStart = LocalDate.of(2020, 2, 1);
+//        LocalDate ldEnd = LocalDate.of(2022, 2, 1);
+//        ListSection listSection = new ListSection("Занимался созданием проекта в рамках ТЗ");
+//        Company company = new Company("OZON", "www.ozon.com");
+//        Period period = new Period(ldStart, ldEnd, "Developer", "Create projext");
+//        CompanySection section = new CompanySection();
+//        company.getPeriods().add(period);
+//        section.getCompanies().add(company);
+//        RESUME1.addSection(SectionType.EXPERIENCE, section);
+//
+//    }
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
