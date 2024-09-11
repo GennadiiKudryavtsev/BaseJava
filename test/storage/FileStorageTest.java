@@ -22,7 +22,8 @@ public class FileStorageTest {
     protected final Resume RESUME2 = new Resume(UUID_2, "Name");
     protected final Resume RESUME3 = new Resume(UUID_3, "Name");
     protected final Resume RESUME4 = new Resume(UUID_4, "Name");
-    File file = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava/storage");
+    File file = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava1/storage");
+
     protected Storage storage = new FileStorage(file, new ObjectStreamStorage());
 
     @BeforeEach
