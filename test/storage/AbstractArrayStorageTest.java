@@ -9,18 +9,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractArrayStorageTest {
     protected static final File STORAGE_DIR = new File("/Users/gennadykudryavtsev/Desktop/MyCode/MyCourseBJ/basejava1/storage");
-    protected static final String UUID_1 = "uuid1Test";
-    protected static final String UUID_2 = "uuid2Test";
-    protected static final String UUID_3 = "uuid3Test";
-    protected static final Resume RESUME1 = new Resume(UUID_1, "Name");
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final String UUID_4 = UUID.randomUUID().toString();
+    protected static final Resume RESUME1 = new Resume(UUID_1, "Namejjjjjjj");
     protected static final Resume RESUME2 = new Resume(UUID_2, "Name");
     protected static final Resume RESUME3 = new Resume(UUID_3, "Name");
-    protected static final Resume RESUME4 = new Resume("uuid4Test", "Name");
+    protected static final Resume RESUME4 = new Resume(UUID_4, "Name");
 
     static ResumeTestData resumeTestData = new ResumeTestData();
 //    protected final Resume RESUME5 = resumeTestData.createResume("uuid5", "Ivanov Ivan Ivanovich");
